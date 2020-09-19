@@ -1,5 +1,6 @@
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import json
+# from more_itertools import chunked
 
 
 def on_reload():
@@ -12,6 +13,7 @@ def on_reload():
     with open('books.json') as books:
         cards = json.load(books)
 
+    # chunked_cards = list(chunked(cards, 2))
     rendered_page = template.render(
         cards=cards
     )

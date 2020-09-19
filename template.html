@@ -11,22 +11,29 @@
   <title>Hello, world!</title>
   </head>
   <body>
-  {% for card in cards %}
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-        <img src="{{ card.img_src|urlencode }}" class="card-img" alt="{{ card.title }}">
-        </div>
-        <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ card.title }}</h5>
-          <p class="card-text">{{ card.author }}</p>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-        </div>
+    <div class="container">
+      <div class="row row-cols-2">
+        {% for card in cards %}
+          <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                <img src="{{ card.img_src|urlencode }}" class="card-img" alt="{{ card.title }}">
+                </div>
+                <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ card.title }}</h5>
+                  <p class="card-text">{{ card.author }}</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
       </div>
     </div>
-  {% endfor %} 
+
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
