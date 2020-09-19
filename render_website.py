@@ -1,7 +1,9 @@
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import json
-# from more_itertools import chunked
+import os
+from more_itertools import chunked
 
+BOOKS_PER_PAGE = 10
 
 def on_reload():
     env = Environment(
@@ -11,12 +13,15 @@ def on_reload():
     template = env.get_template('template.html')
 
     with open('books.json') as books:
-        cards = json.load(books)
+        book_cards = json.load(books)
 
-    # chunked_cards = list(chunked(cards, 2))
-    rendered_page = template.render(
-        cards=cards
-    )
+    chunked_cards = list(chunked(book_cards, BOOKS_PER_PAGE))
+    os.makedirs('pages', exist_ok=True)
 
-    with open('index.html', 'w', encoding='utf8') as file:
-        file.write(rendered_page)
+    for number, cards_by_page in enumerate(chunked_cards):
+        rendered_page = template.render(
+            cards=cards_by_page
+        )
+        path_to_a_page = os.path.join('pages', f'index{number}.html')
+        with open(path_to_a_page, 'w', encoding='utf8') as file:
+            file.write(rendered_page)
