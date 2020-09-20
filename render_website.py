@@ -3,7 +3,8 @@ import json
 import os
 from more_itertools import chunked
 
-BOOKS_PER_PAGE = 10
+BOOKS_PER_PAGE = 50
+
 
 def on_reload():
     env = Environment(
@@ -15,13 +16,21 @@ def on_reload():
     with open('books.json') as books:
         book_cards = json.load(books)
 
-    chunked_cards = list(chunked(book_cards, BOOKS_PER_PAGE))
     os.makedirs('pages', exist_ok=True)
+    chunked_cards = list(chunked(book_cards, BOOKS_PER_PAGE))
 
-    for number, cards_by_page in enumerate(chunked_cards):
+    for page_number, cards_by_page in enumerate(chunked_cards):
+        paginator = {
+            'number_of_pages': len(chunked_cards),
+            'current_page': page_number + 1
+        }
         rendered_page = template.render(
-            cards=cards_by_page
+            cards=cards_by_page,
+            paginator=paginator,
         )
-        path_to_a_page = os.path.join('pages', f'index{number}.html')
+        path_to_a_page = os.path.join('pages', f'index{page_number + 1}.html')
         with open(path_to_a_page, 'w', encoding='utf8') as file:
             file.write(rendered_page)
+
+
+on_reload()
