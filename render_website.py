@@ -19,16 +19,16 @@ def on_reload():
     os.makedirs('pages', exist_ok=True)
     chunked_cards = list(chunked(book_cards, BOOKS_PER_PAGE))
 
-    for page_number, cards_by_page in enumerate(chunked_cards):
+    for page_number, cards_by_page in enumerate(chunked_cards, start=1):
         paginator = {
             'number_of_pages': len(chunked_cards),
-            'current_page': page_number + 1
+            'current_page': page_number
         }
         rendered_page = template.render(
             cards=cards_by_page,
             paginator=paginator,
         )
-        path_to_a_page = os.path.join('pages', f'index{page_number + 1}.html')
+        path_to_a_page = os.path.join('pages', f'index{page_number}.html')
         with open(path_to_a_page, 'w', encoding='utf8') as file:
             file.write(rendered_page)
 
