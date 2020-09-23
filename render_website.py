@@ -2,6 +2,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import json
 import os
 from more_itertools import chunked
+from pathlib import Path
 
 BOOKS_PER_PAGE = 24
 
@@ -18,6 +19,7 @@ def on_reload():
 
     os.makedirs('pages', exist_ok=True)
     chunked_cards = list(chunked(book_cards, BOOKS_PER_PAGE))
+    generated_htmls = set()
 
     for page_number, cards_by_page in enumerate(chunked_cards, start=1):
         paginator = {
@@ -31,6 +33,11 @@ def on_reload():
         path_to_a_page = os.path.join('pages', f'index{page_number}.html')
         with open(path_to_a_page, 'w', encoding='utf8') as file:
             file.write(rendered_page)
+        generated_htmls.add(Path(path_to_a_page))
+
+    all_htmls = set(Path('pages/').glob('*.html'))
+    for html in all_htmls.difference(generated_htmls):
+        html.unlink()
 
 
 on_reload()
