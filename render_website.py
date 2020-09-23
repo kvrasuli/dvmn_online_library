@@ -3,7 +3,7 @@ import json
 import os
 from more_itertools import chunked
 
-BOOKS_PER_PAGE = 25
+BOOKS_PER_PAGE = 24
 
 
 def on_reload():
