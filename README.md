@@ -1,7 +1,7 @@
 # HTML-библиотека
 
 Это HTML-библиотека книг жанра "Научная фантастика". Работает оффлайн, если скачать весь репозиторий.
-Посмотреть, как работает можно [здесь](https://kvrasuli.github.io/dvmn_online_library/).
+Посмотреть, как работает можно [здесь](https://kvrasuli.github.io/online_library).
 
 ![](https://i.imgur.com/tlU81cP.png)
 ## Как использовать
